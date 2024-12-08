@@ -1,13 +1,18 @@
 import os
+import asyncio
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from handlers.handlers import router
 
-load_dotenv()  # Загрузка переменных окружения из .env
+# Загрузка переменных окружения из .env
+load_dotenv()
 
 # Получение токена из переменной окружения
 token = os.getenv("BOT_TOKEN")
+
+if not token:
+    raise ValueError("No BOT_TOKEN provided")
 
 bot = Bot(token=token)
 storage = MemoryStorage()
@@ -21,5 +26,4 @@ async def main():
 
 # Проверка имени главного модуля
 if __name__ == '__main__':
-    import asyncio
     asyncio.run(main())
